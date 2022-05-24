@@ -1,0 +1,12 @@
+click
+dash
+dash_bootstrap_components
+dash_daq
+matplotlib
+numpy
+pandas
+plotly
+scikit_learn
+scipy
+torch
+torchvision
