@@ -32,3 +32,7 @@ To change manifold used by the tool create a class extending `Manifold` and set 
 `view/components/` - gui elements templates
 
 `models/` - example variational autoencoder models with training code
+
+## Images
+Global and local view of latent space of the default model.
+![](image.png?raw=true "")
