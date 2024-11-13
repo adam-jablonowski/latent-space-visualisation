@@ -1,8 +1,10 @@
 import time
 from typing import Iterable
+
 import numpy as np
-from scipy.integrate import solve_bvp, solve_ivp
 from dash import html
+from scipy.integrate import solve_bvp, solve_ivp
+
 
 # This function evaluates the differential equation c'' = f(c, c')
 def geodesic_system(manifold, c, dc):
@@ -17,19 +19,22 @@ def geodesic_system(manifold, c, dc):
     for n in range(N):
         Mn = np.squeeze(M[n, :, :])
         if np.linalg.cond(Mn) < 1e-15:
-            raise Exception('Ill-condition metric!\n')
-        dvecMdcn = dM[n, :, :, :].reshape(D * D, D, order='F')
+            raise Exception("Ill-condition metric!\n")
+        dvecMdcn = dM[n, :, :, :].reshape(D * D, D, order="F")
         blck = np.kron(np.eye(D), dc[:, n])
         # Geodesic equation (7) https://arxiv.org/pdf/1710.11379.pdf
         ddc[:, n] = -0.5 * (
-            np.linalg.inv(Mn) @ (
-                2 * blck @ dvecMdcn @ dc[:, n] - dvecMdcn.T @ np.kron(dc[:, n], dc[:, n])
+            np.linalg.inv(Mn)
+            @ (
+                2 * blck @ dvecMdcn @ dc[:, n]
+                - dvecMdcn.T @ np.kron(dc[:, n], dc[:, n])
             )
         )
         # Alternative Geodesic equation (8) https://arxiv.org/pdf/1710.11379.pdf
         # TODO
 
     return ddc
+
 
 # This function changes the 2nd order ODE to two 1st order ODEs takes c, dc and returns dc, ddc.
 def second2first_order(manifold, state):
@@ -43,6 +48,7 @@ def second2first_order(manifold, state):
     y = np.concatenate((cm, cmm), axis=0)
     return y
 
+
 # This function returns the boundary conditions
 def boundary_conditions(ya, yb, c0, c1):
     D = len(c0)
@@ -51,27 +57,30 @@ def boundary_conditions(ya, yb, c0, c1):
     retVal[D:] = yb[:D] - c1.flatten()
     return retVal
 
+
 # This is the default solver that is a build-in python BVP solver.
 def solve_shortest_path(
-        manifold, 
-        c0: np.ndarray, 
-        c1: np.ndarray, 
-        steps: int, 
-        max_nodes: int, 
-        tol: float,
-        T: int, # def 30
-    ):
+    manifold,
+    c0: np.ndarray,
+    c1: np.ndarray,
+    steps: int,
+    max_nodes: int,
+    tol: float,
+    T: int,  # def 30
+):
     D = len(c0)
     # The functions that we need for the bvp solver
-    ode_fun = lambda t, c_dc: second2first_order(manifold, c_dc)  # D x T, implements c'' = f(c, c')
+    ode_fun = lambda t, c_dc: second2first_order(
+        manifold, c_dc
+    )  # D x T, implements c'' = f(c, c')
     bc_fun = lambda ya, yb: boundary_conditions(ya, yb, c0, c1)  # 2D x 0, what returns?
     # Initialize the curve with straight line or with another given curve
     t_init = np.linspace(0, 1, T, dtype=np.float32)  # T x 0
     c_init = np.outer(
-        c0.reshape(-1, 1), 
+        c0.reshape(-1, 1),
         (1.0 - t_init.reshape(1, T)),
     ) + np.outer(
-        c1.reshape(-1, 1), 
+        c1.reshape(-1, 1),
         t_init.reshape(1, T),
     )  # D x T
     dc_init = (c1 - c0).reshape(D, 1).repeat(T, axis=1)  # D x T
@@ -79,48 +88,50 @@ def solve_shortest_path(
     # Solve the geodesic problem
     start = time.time()
     solution = solve_bvp(
-        ode_fun, 
-        bc_fun, 
-        t_init.flatten(), 
-        c_dc_init, 
-        tol=tol, 
-        max_nodes=max_nodes, 
-        verbose=2
+        ode_fun,
+        bc_fun,
+        t_init.flatten(),
+        c_dc_init,
+        tol=tol,
+        max_nodes=max_nodes,
+        verbose=2,
     )
     elapsed = time.time() - start
-    ts = np.linspace(0,1,steps)
-    print('Geodesic solver (bvp) succed!')
+    ts = np.linspace(0, 1, steps)
+    print("Geodesic solver (bvp) succed!")
     path = solution.sol(ts)[:D, :].T
     stats = {
-        'status': solution.message,
-        'number of iterations': solution.niter,
-        'success:': solution.success,
-        'elapsed': elapsed,
+        "status": solution.message,
+        "number of iterations": solution.niter,
+        "success:": solution.success,
+        "elapsed": elapsed,
     }
     return path, stats
 
+
 def euclidean_shortest_path(
-        c0: np.ndarray, 
-        c1: np.ndarray, 
-        steps: int, 
-    ):
+    c0: np.ndarray,
+    c1: np.ndarray,
+    steps: int,
+):
     return np.array([np.linspace(c0[i], c1[i], steps) for i in range(len(c0))]).T
+
 
 # This function solves the initial value problem
 # for the implementation of the expmap
 def solve_expmap(
-        manifold, 
-        x: np.ndarray, 
-        v: np.ndarray, 
-        time_range: float, 
-        steps: int,
-        options,
-    ):
+    manifold,
+    x: np.ndarray,
+    v: np.ndarray,
+    time_range: float,
+    steps: int,
+    options,
+):
     # Input: v,x (D)
-    ode_fun = lambda t, c_dc: second2first_order(manifold, c_dc).flatten()  
+    ode_fun = lambda t, c_dc: second2first_order(manifold, c_dc).flatten()
     # The vector now is in normal coordinates
     # The tangent vector lies in the normal coordinates
-    required_length = np.linalg.norm(v)  
+    required_length = np.linalg.norm(v)
     # Rescale the vector to be proper for solving the geodesic.
     v = v / required_length
     M = manifold.metric_tensor(x)[0]
@@ -132,49 +143,52 @@ def solve_expmap(
     # First solution of the IVP problem
     start = time.time()
     solution = solve_ivp(
-        ode_fun, 
-        [0, time_range], 
-        init, 
-        t_eval=np.linspace(0, time_range, steps), 
+        ode_fun,
+        [0, time_range],
+        init,
+        t_eval=np.linspace(0, time_range, steps),
         # dense_output=True,
         # vectorized=True,
         **options,
-    )      
+    )
     elapsed = time.time() - start
-    print('Geodesic solver (ivp) succed!')
-    path = solution.y[:len(x), :].T
+    print("Geodesic solver (ivp) succed!")
+    path = solution.y[: len(x), :].T
     stats = {
-        'status': solution.message,
-        'Number of evaluations of the right-hand side': solution.nfev,
-        'Number of evaluations of the Jacobian': solution.njev,
-        'Number of LU decompositions.': solution.nlu,
-        'success:': solution.success,
-        'elapsed': elapsed,
+        "status": solution.message,
+        "Number of evaluations of the right-hand side": solution.nfev,
+        "Number of evaluations of the Jacobian": solution.njev,
+        "Number of LU decompositions.": solution.nlu,
+        "success:": solution.success,
+        "elapsed": elapsed,
     }
     return path, stats
 
+
 def euclidean_direction(
-        x: np.ndarray, 
-        v: np.ndarray, 
-        time_range: float, 
-        steps: int,
-    ):
+    x: np.ndarray,
+    v: np.ndarray,
+    time_range: float,
+    steps: int,
+):
     return euclidean_shortest_path(x, x + v * time_range, steps)
+
 
 def all_directions(n, vector):
     directions = []
     base = complex(*vector)
-    mult = complex(np.cos(2 * np.pi / n), np.sin(2 * np.pi / n)) 
+    mult = complex(np.cos(2 * np.pi / n), np.sin(2 * np.pi / n))
     for i in range(n):
         directions.append(np.array([base.real, base.imag]))
         base *= mult
     return directions
 
+
 def euclidean_neighbors(
-    point, 
-    inputs_sets, 
-    points_sets, 
-    measure_sets, 
+    point,
+    inputs_sets,
+    points_sets,
+    measure_sets,
     radius,
 ):
     inputs = []

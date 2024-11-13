@@ -1,17 +1,26 @@
-from plot import PlotFactory
+import plotly.express as px
 from dash import Input, Output, State, ctx, dcc, html
 from dash.exceptions import PreventUpdate
-from view.components.style import STYLE_CENTER
+
+from plot import PlotFactory
 from view.components.figure import Figure
-import plotly.express as px
+from view.components.style import STYLE_CENTER
+
 
 class Plot(Figure):
-
     def __init__(self, id: str, desc: str):
         super(Plot, self).__init__(id, desc)
-        
-    def init_callbacks(self, app, manifold, settings, case, components, global_reduction, local_reduction):
 
+    def init_callbacks(
+        self,
+        app,
+        manifold,
+        settings,
+        case,
+        components,
+        global_reduction,
+        local_reduction,
+    ):
         @app.callback(
             Output(*self.figure),
             Input(*settings.data),
@@ -25,10 +34,6 @@ class Plot(Figure):
                 return px.scatter()
             else:
                 factory = PlotFactory(
-                    settings,
-                    case,
-                    manifold, 
-                    global_reduction, 
-                    local_reduction
+                    settings, case, manifold, global_reduction, local_reduction
                 )
                 return factory.make_figure(components_data, height=600)

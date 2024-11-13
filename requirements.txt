@@ -1,12 +1,13 @@
 click
 dash
-dash_bootstrap_components
-dash_daq
+dash-bootstrap-components
+dash-daq
 matplotlib
 numpy
 pandas
 plotly
-scikit_learn
+pre-commit
+scikit-learn
 scipy
 torch
 torchvision

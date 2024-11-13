@@ -1,14 +1,12 @@
-
 import pickle
 
 import numpy as np
-from sklearn.decomposition import PCA
 import torch
+from sklearn.decomposition import PCA
 from sklearn.neighbors import KDTree
 
 
 class Neighbours:
-
     def __init__(self, points=None, repr=None):
         if points is not None:
             self.tree = KDTree(points, leaf_size=2)
@@ -20,4 +18,3 @@ class Neighbours:
 
     def to_string(self):
         return list(pickle.dumps(self.tree))
-    

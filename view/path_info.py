@@ -1,20 +1,18 @@
 import numpy as np
+import plotly.express as px
 import torch
-
-from api import path_info
 from dash import Input, Output, State, ctx, dcc, html
 from dash.exceptions import PreventUpdate
+
+from api import path_info
 from view.components.figure import Figure
-import plotly.express as px
 
 
 class PathInfo(Figure):
-
     def __init__(self, id: str, desc: str):
         super(PathInfo, self).__init__(id, desc)
-        
-    def init_callbacks(self, app, decoder, paths):
 
+    def init_callbacks(self, app, decoder, paths):
         @app.callback(
             Output(*self.graph),
             Input(*paths.data),

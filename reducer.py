@@ -1,12 +1,11 @@
 import pickle
 
 import numpy as np
-from sklearn.decomposition import PCA
 import torch
+from sklearn.decomposition import PCA
 
 
 class Reducer:
-
     def __init__(self, points=None, repr=None):
         if points is not None:
             self.pca = PCA(n_components=2)
@@ -28,4 +27,3 @@ class Reducer:
 
     def to_string(self):
         return (list(pickle.dumps(self.pca)), self.dim)
-    
