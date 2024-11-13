@@ -1,11 +1,9 @@
 import time
 
-import numpy as np
 import plotly.graph_objects as go
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision
 from torch.autograd import functional
 from torchvision import datasets, transforms
 

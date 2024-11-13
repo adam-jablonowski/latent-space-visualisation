@@ -1,14 +1,11 @@
-import click
 import numpy as np
 import plotly.graph_objects as go
-from click import option
 from plotly.subplots import make_subplots
 
 from data import Data
 from equations import (
     all_directions,
     euclidean_direction,
-    euclidean_neighbors,
     euclidean_shortest_path,
     solve_expmap,
     solve_shortest_path,

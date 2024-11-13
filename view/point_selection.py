@@ -1,11 +1,9 @@
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import Input, Output, State, ctx, dcc, html
-from dash.exceptions import PreventUpdate
 
-from api import point_info, select_point
+from api import select_point
 from view.components.component import Component
-from view.components.figure import Figure
 from view.components.html import described_input
 from view.components.style import STYLE_BORDER_INNER, STYLE_CENTER
 

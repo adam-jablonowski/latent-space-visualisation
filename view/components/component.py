@@ -1,10 +1,9 @@
 import json
 
 from dash import Input, Output, State, ctx, dcc, html
-from dash.exceptions import PreventUpdate
 
 from view.components.html import button, col, row
-from view.components.style import STYLE_CENTER, STYLE_COMPONENT
+from view.components.style import STYLE_COMPONENT
 
 
 class Component:

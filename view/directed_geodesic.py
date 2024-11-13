@@ -1,11 +1,9 @@
-from email import message
-
-from dash import Input, Output, State, dcc, html
+from dash import Input, Output, State, html
 
 from api import add_expmap_path
 from view.components.component import Component
-from view.components.html import described_input, twice
-from view.components.style import STYLE_BORDER_INNER, STYLE_CENTER
+from view.components.html import described_input
+from view.components.style import STYLE_BORDER_INNER
 
 
 class ExpmapPaths(Component):

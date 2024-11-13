@@ -1,5 +1,4 @@
 import dash_bootstrap_components as dbc
-import torch
 from dash import Dash, html
 from torchvision import datasets
 

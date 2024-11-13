@@ -1,8 +1,6 @@
 import time
-from typing import Iterable
 
 import numpy as np
-from dash import html
 from scipy.integrate import solve_bvp, solve_ivp
 
 

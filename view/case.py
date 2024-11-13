@@ -1,5 +1,4 @@
-from dash import Input, Output, State, ctx, dcc, html
-from dash.exceptions import PreventUpdate
+from dash import Input, Output, State, html
 
 from api import global_view_points
 from view.components.component import Component

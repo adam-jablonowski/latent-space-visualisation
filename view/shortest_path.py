@@ -1,11 +1,10 @@
-import numpy as np
 from dash import Input, Output, State, ctx, dcc, html
 from dash.exceptions import PreventUpdate
 
 from api import add_shortest_path
 from view.components.component import Component
-from view.components.html import col, described_input, row, twice
-from view.components.style import STYLE_BORDER, STYLE_BORDER_INNER, STYLE_CENTER
+from view.components.html import described_input
+from view.components.style import STYLE_BORDER_INNER
 
 
 class ShortestPaths(Component):

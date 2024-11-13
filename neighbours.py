@@ -1,8 +1,5 @@
 import pickle
 
-import numpy as np
-import torch
-from sklearn.decomposition import PCA
 from sklearn.neighbors import KDTree
 
 

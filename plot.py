@@ -2,17 +2,7 @@ import numpy as np
 import plotly.figure_factory as ff
 import plotly.graph_objects as go
 import torch
-from matplotlib.pyplot import axis
-from plotly.subplots import make_subplots
 
-from equations import (
-    all_directions,
-    euclidean_direction,
-    euclidean_neighbors,
-    euclidean_shortest_path,
-    solve_expmap,
-    solve_shortest_path,
-)
 from neighbours import Neighbours
 from reducer import Reducer
 

@@ -1,8 +1,5 @@
-import numpy as np
 import plotly.express as px
-import torch
-from dash import Input, Output, State, ctx, dcc, html
-from dash.exceptions import PreventUpdate
+from dash import Input, Output
 
 from api import path_info
 from view.components.figure import Figure

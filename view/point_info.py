@@ -1,7 +1,7 @@
-from dash import Input, Output, State, ctx, dcc, html
+from dash import Input, Output
 from dash.exceptions import PreventUpdate
 
-from api import click_data_to_point_2d, point_info
+from api import point_info
 from view.components.figure import Figure
 
 

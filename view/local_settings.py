@@ -1,10 +1,9 @@
-import numpy as np
-from dash import Input, Output, State, dcc, html
+from dash import Input, Output, State, html
 from dash.exceptions import PreventUpdate
 
 from api import local_dimensionality_reduction
 from view.components.component import Component
-from view.components.html import arrows_input, axis_input, described_input, twice
+from view.components.html import arrows_input, axis_input, described_input
 from view.components.style import STYLE_BORDER_INNER
 
 

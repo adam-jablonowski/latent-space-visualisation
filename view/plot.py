@@ -1,10 +1,8 @@
 import plotly.express as px
-from dash import Input, Output, State, ctx, dcc, html
-from dash.exceptions import PreventUpdate
+from dash import Input, Output, State
 
 from plot import PlotFactory
 from view.components.figure import Figure
-from view.components.style import STYLE_CENTER
 
 
 class Plot(Figure):

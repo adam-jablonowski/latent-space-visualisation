@@ -1,4 +1,4 @@
-from dash import Input, Output, State, ctx, html
+from dash import Input, Output, State, html
 from dash.exceptions import PreventUpdate
 
 from api import global_dimensionality_reducion
