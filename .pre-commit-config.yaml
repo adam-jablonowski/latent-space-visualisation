@@ -1,0 +1,39 @@
+repos:
+  # Use `black` for code formatting
+  - repo: https://github.com/psf/black
+    rev: 23.9.1  # Use the latest stable version of black
+    hooks:
+      - id: black
+        name: Black
+        language_version: python3.12  # or your Python version
+
+  # Use `flake8` for linting
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0  # Latest stable version of flake8
+    hooks:
+      - id: flake8
+        name: Flake8
+        additional_dependencies: [flake8-bugbear]  # Add plugins if needed
+        args: [--max-line-length=88]  # Optional: Customize linting rules
+  
+  # Use `isort` for import sorting
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0  # Latest stable version
+    hooks:
+      - id: isort
+        name: isort
+        args: ["--profile", "black"]
+
+  # Use `mypy` for static type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.5.1  # Latest stable version of mypy
+    hooks:
+      - id: mypy
+        name: Mypy
+        language_version: python3.12  # Specify the Python version
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v3.0.0a5  # You can change this to the latest version
+    hooks:
+      - id: pylint
+        args: ['--max-line-length=79']  # Customize args as needed
+
