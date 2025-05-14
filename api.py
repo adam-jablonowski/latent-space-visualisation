@@ -14,7 +14,7 @@ from neighbours import Neighbours
 from reducer import Reducer
 
 
-### Utils
+# Utils
 def click_data_to_point_2d(click_data):
     return np.array(
         [
@@ -44,7 +44,7 @@ def click_data_to_point_latent(click_data):
     return latent_point_string_eval(click_data["points"][0]["text"])
 
 
-### Components
+# Components
 def global_view_points(manifold, options):
     train_loader, test_loader = manifold.get_datasets(options["batch-size"])
     data = Data()
@@ -131,14 +131,16 @@ def add_shortest_path(manifold, data, settings, options):
         line_color="darkgreen",
         options=options,
         stats=stats,
-        description=f"Approximated shortest path using a Riemannian metric, green, beginning: {beg_latent} -> end: {end_latent}",
+        description=f"Approximated shortest path using a Riemannian metric,"
+        f"green, beginning: {beg_latent} -> end: {end_latent}",
     )
     data.add_set(
         euclidean_latent,
         manifold=manifold,
         mode="lines+markers",
         line_color="red",
-        description=f"Approximated shortest path using a Euclidean metric, red, beginning: {beg_latent} -> end: {end_latent}",
+        description=f"Approximated shortest path using a Euclidean metric,"
+        f"red, beginning: {beg_latent} -> end: {end_latent}",
     )
     return data.get_data(), beg_2d, beg_latent, end_2d, end_latent
 
@@ -248,7 +250,8 @@ def contour_maps_points(manifold, settings, selected, options):
                 manifold=manifold,
                 options=options,
                 stats=s,
-                description=f"Vertical contour, beginning: {selected} -> direction: {d}",
+                description=f"Vertical contour, beginning:"
+                f"{selected} -> direction: {d}",
             )
 
     if options["vertical"]:
@@ -259,7 +262,8 @@ def contour_maps_points(manifold, settings, selected, options):
                 mode="lines+markers",
                 options=options,
                 stats=s,
-                description=f"Vertical contour, beginning: {selected} -> direction: {d}",
+                description=f"Vertical contour, beginning:"
+                f"{selected} -> direction: {d}",
             )
 
     if options["horizontal"]:
@@ -275,7 +279,8 @@ def contour_maps_points(manifold, settings, selected, options):
                 manifold=manifold,
                 mode="lines+markers",
                 options=options if not options["vertical"] else None,
-                description=f"Horizontal contour, level: {l}, first two directions: {directions[0]}, {directions[1]}",
+                description=f"Horizontal contour, level:"
+                f"{l}, first two directions: {directions[0]}, {directions[1]}",
             )
 
     return data.get_data()
@@ -327,13 +332,15 @@ def add_expmap_path(manifold, settings, selected, data, options):
         line_color="darkgreen",
         options=options,
         stats=stats,
-        description=f"Approximated directed geodesic using a Riemannian metric, green, {selected} -> direction: {direction}",
+        description=f"Approximated directed geodesic using a Riemannian metric,"
+        f"green, {selected} -> direction: {direction}",
     )
     data.add_set(
         euclidean_latent,
         manifold=manifold,
         mode="lines+markers",
         line_color="red",
-        description=f"Approximated directed geodesic using a Euclidean metric, red, {selected} -> direction: {direction}",
+        description=f"Approximated directed geodesic using a Euclidean metric,"
+        f"red, {selected} -> direction: {direction}",
     )
     return data.get_data()

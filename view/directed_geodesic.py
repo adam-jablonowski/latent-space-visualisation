@@ -28,18 +28,20 @@ class ExpmapPaths(Component):
     def inner_html(self):
         return html.Div(
             [
-                "Choose parameters of a directed geodesic and add the geodesic in the local view visualisation. ",
+                "Choose parameters of a directed geodesic and add the geodesic "
+                "in the local view visualisation. ",
                 "Starting point is the point selected for the local view",
                 html.Div(
                     [
                         described_input(
-                            "x of initial direction in 2d-reduced dimension (float)",
+                            "x of initial direction in 2d-reduced dimension " "(float)",
                             "float",
                             self.ids(0),
                             1,
                         ),
                         described_input(
-                            "y of initial direction in 2d-reduced dimension (float) ",
+                            "y of initial direction in 2d-reduced dimension "
+                            "(float) ",
                             "float",
                             self.ids(1),
                             0,

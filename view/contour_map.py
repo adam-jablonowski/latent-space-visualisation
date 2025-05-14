@@ -32,14 +32,17 @@ class ContourMap(Component):
     def inner_html(self):
         return html.Div(
             [
-                "Choose parameters of contour maps around the point selcted for local view and display the mappings in the local view visualisation.",
+                "Choose parameters of contour maps around the point selcted "
+                "for local view and display the mappings in the local view "
+                "visualisation.",
                 html.Div(
                     [
                         described_input(
                             "Number of vertical contours", "number", self.ids(2), 12
                         ),
                         described_input(
-                            "Length of initial direction vectors for vertical contours (float)",
+                            "Length of initial direction vectors for vertical "
+                            "contours (float)",
                             "float",
                             self.ids(3),
                             1,

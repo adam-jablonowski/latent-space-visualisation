@@ -64,7 +64,7 @@ class ManifoldVae(Manifold):
         self.dataset = dataset
 
     def loss_function(self, recon_x, x, mu, log_var):
-        ### Computes loss of model
+        # Computes loss of model
         def batch_loss(recon_x, x, mu, log_var):
             x = torch.tensor(x)
             x = x.view(784)
@@ -78,7 +78,7 @@ class ManifoldVae(Manifold):
         return [batch_loss(*e) for e in zip(recon_x, x, mu, log_var)]
 
     def encode(self, x):
-        ### Returns vectorized encoding of x as mu and log var
+        # Returns vectorized encoding of x as mu and log var
         x = torch.tensor(x)
         x = x.view(-1, 784)
         x = x.float()
@@ -87,13 +87,13 @@ class ManifoldVae(Manifold):
         # return self.model.encoder(x)[0].squeeze(1).detach()
 
     def decode(self, z):
-        ### Returns vectorized encoding of sampled z
+        # Returns vectorized encoding of sampled z
         z = torch.tensor(z)
         z = z.float()
         return self.model.decoder(z)
 
     def get_datasets(self, batch_size=100):
-        ### Returns tuple of datasets train and test loader
+        # Returns tuple of datasets train and test loader
         # MNIST Dataset
         train_dataset = self.dataset(
             root="./datasets/",
@@ -118,7 +118,7 @@ class ManifoldVae(Manifold):
         return train_loader, test_loader
 
     def point_info(self, point):
-        ### Returns info about latent point in form of go.Image
+        # Returns info about latent point in form of go.Image
         decoded = self.decode(torch.Tensor(point))
         decoded = decoded.reshape((28, 28)).detach()
         color_range = 255
@@ -127,7 +127,7 @@ class ManifoldVae(Manifold):
         return go.Image(z=decoded.detach())
 
     def metric_tensor(self, z, nargout=1):
-        ### Returns vectorized metric tensor at latent point z (and its jacobian if nargout=2)
+        # Returns vectorized metric tensor at latent point z (and its jacobian if nargout=2)
         time.time()
 
         def get_metrics(latents):

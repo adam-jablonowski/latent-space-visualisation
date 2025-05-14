@@ -34,7 +34,8 @@ def geodesic_system(manifold, c, dc):
     return ddc
 
 
-# This function changes the 2nd order ODE to two 1st order ODEs takes c, dc and returns dc, ddc.
+# This function changes the 2nd order ODE to two 1st order ODEs,
+# takes c, dc and returns dc, ddc.
 def second2first_order(manifold, state):
     # Input: state [c; dc] (2D x N), y=[dc; ddc]: (2D x N)
     D = int(state.shape[0] / 2)
